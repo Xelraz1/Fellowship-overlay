@@ -136,13 +136,11 @@
     if (isGundeClass(player)) return '';
 
     const currentSpirit = Number(spiritSnapshot?.current || 0);
-    const maxSpirit = Number(spiritSnapshot?.max || getSpiritMaxByBlueStone(player?.stones?.blue));
     const blueStone = Number(player?.stones?.blue || 0);
 
-    if (currentSpirit >= 25) return 'spirit-glow-blue';
-    if (maxSpirit > 0 && currentSpirit >= maxSpirit) return 'spirit-glow-blue';
     if (blueStone >= 1500 && currentSpirit >= 85) return 'spirit-glow-blue';
     if (blueStone >= 450 && blueStone < 2640 && currentSpirit >= 95) return 'spirit-glow-blue';
+    if (blueStone < 450 && currentSpirit >= 100) return 'spirit-glow-blue';
     return '';
   }
 
@@ -337,7 +335,6 @@
           <div class="relics-and-spirit">
             <div class="spirit-bar" aria-hidden="true">
               <div class="spirit-fill"></div>
-              <div class="spirit-text" aria-hidden="true"></div>
             </div>
             <div class="relics-block"></div>
           </div>
@@ -396,14 +393,19 @@
       const pct = Math.max(0, Math.min(100, Math.round((current / max) * 100)));
       spiritFill.style.width = `${pct}%`;
       spiritFill.classList.remove('spirit-glow-blue');
-      const spiritText = cardWrapper.querySelector<HTMLElement>('.spirit-text');
-      if (spiritText) {
-        spiritText.textContent = `${Math.round(current)} / ${Math.round(max)}`;
-        spiritText.classList.remove('spirit-glow-blue');
-        const spiritHighlightClass = getSpiritHighlight(player, displaySpirit);
-        if (spiritHighlightClass) {
-          spiritText.classList.add(spiritHighlightClass);
-          spiritFill.classList.add(spiritHighlightClass);
+      const spiritHighlightClass = getSpiritHighlight(player, displaySpirit);
+      if (spiritHighlightClass) {
+        spiritFill.classList.add(spiritHighlightClass);
+        try {
+          // Log computed styles to help debug unexpected color (visible in Electron console)
+          // eslint-disable-next-line no-console
+          console.log('SPIRIT-GLOW', String(player.id || ''), spiritHighlightClass, {
+            backgroundImage: window.getComputedStyle(spiritFill).backgroundImage,
+            boxShadow: window.getComputedStyle(spiritFill).boxShadow,
+            inlineBackground: spiritFill.style.background || null,
+          });
+        } catch (e) {
+          // ignore during tests
         }
       }
       const { iconSize, iconGap } = getScaledMetrics(getCardScale());

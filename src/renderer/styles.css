@@ -236,26 +236,10 @@ button:hover {
   background: linear-gradient(90deg, #46ebff, #7af6ff);
   transition: width 220ms ease;
 }
-.spirit-text {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px * var(--card-scale));
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.92);
-  pointer-events: none;
-  text-shadow: 0 0 4px rgba(0, 0, 0, 0.6);
-}
 
 .spirit-fill.spirit-glow-blue {
-  box-shadow: 0 0 10px rgba(70,235,255,0.9), 0 0 18px rgba(70,235,255,0.45);
-}
-
-.spirit-text.spirit-glow-blue {
-  color: #46ebff;
-  text-shadow: 0 0 10px rgba(70, 235, 255, 0.95), 0 0 18px rgba(70, 235, 255, 0.55);
+  background: linear-gradient(90deg, #ff4d4d, #ff0000);
+  box-shadow: 0 0 12px rgba(255, 55, 55, 0.95), 0 0 24px rgba(255, 0, 0, 0.55);
 }
 
 .relics-block {
