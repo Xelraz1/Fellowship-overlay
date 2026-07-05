@@ -250,8 +250,9 @@ button:hover {
   flex-wrap: wrap;
   gap: calc(6px * var(--card-scale));
   align-items: center;
-  justify-content: flex-start;
-  align-content: flex-start;
+  justify-content: center;
+  align-content: center;
+  width: 100%;
 }
 
 .relic-chip {

@@ -26,13 +26,13 @@ const DEFAULT_RECENT_SKILLS_LIMIT = 7;
 const DEFAULT_VISIBILITY_SETTINGS: OverlayVisibilitySettings = { showParty: true, showPull: false, showRecentSkills: false };
 const CARD_SCALE_MIN = 0.30;
 const CARD_SCALE_MAX = 1.8;
-const DEFAULT_CARD_SCALE = 0.7;
+const DEFAULT_CARD_SCALE = 0.9;
 const FRAME_GAP_MIN = 0;
 const FRAME_GAP_MAX = 40;
 const DEFAULT_FRAME_GAP = 12;
 const PANEL_OPACITY_MIN = 0.2;
 const PANEL_OPACITY_MAX = 1;
-const DEFAULT_PANEL_OPACITY = 0.88;
+const DEFAULT_PANEL_OPACITY = 0.65;
 const ICONS_PER_ROW_MIN = 1;
 const ICONS_PER_ROW_MAX = 6;
 const DEFAULT_ICONS_PER_ROW = 3;
@@ -45,7 +45,7 @@ const DEFAULT_HOTKEYS: OverlayHotkeys = {
   toggleInteraction: 'F8',
   pickLog: 'F9',
   toggleVisibility: 'F10',
-  openSettings: 'F11',
+  openSettings: 'F7',
 };
 const DEFAULT_RECENT_SKILLS_LAYOUT_DIRECTION: RecentSkillsLayoutDirection = 'horizontal';
 const DEFAULT_RECENT_SKILLS_GROWTH_DIRECTION: RecentSkillsGrowthDirection = 'right';

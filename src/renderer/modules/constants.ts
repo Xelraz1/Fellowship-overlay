@@ -21,16 +21,16 @@
   const DEFAULT_RECENT_SKILLS_PANEL_POSITION: Point = { x: 16, y: 200 };
   const DEFAULT_VISIBILITY_SETTINGS: OverlayVisibilitySettings = { showParty: true, showPull: false, showRecentSkills: false };
   const DEFAULT_RECENT_SKILLS_LIMIT = 7;
-  const DEFAULT_CARD_SCALE = 1;
+  const DEFAULT_CARD_SCALE = 0.9;
   const DEFAULT_FRAME_GAP = 12;
   const DEFAULT_LAYOUT_DIRECTION: 'vertical' | 'horizontal' = 'vertical';
-  const DEFAULT_PANEL_OPACITY = 0.88;
+  const DEFAULT_PANEL_OPACITY = 0.65;
   const DEFAULT_ICONS_PER_ROW = 3;
   const DEFAULT_HOTKEYS: OverlayHotkeys = {
     toggleInteraction: 'F8',
     pickLog: 'F9',
     toggleVisibility: 'F10',
-    openSettings: 'F11',
+    openSettings: 'F7',
   };
   const DEFAULT_RECENT_SKILLS_LAYOUT_DIRECTION: 'vertical' | 'horizontal' = 'horizontal';
   const DEFAULT_RECENT_SKILLS_GROWTH_DIRECTION: 'left' | 'right' | 'up' | 'down' = 'right';
