@@ -335,11 +335,12 @@
           </div>
         </div>
         <div class="player-info-row">
-          <div class="spirit-inline">
-            <span class="spirit-label">${escapeHtml(t('spirit'))}</span>
-            <span class="spirit-total">-</span>
-          </div>
-          <div class="relics-block"></div>
+          <div class="relics-and-spirit">
+              <div class="spirit-bar" aria-hidden="true">
+                <div class="spirit-fill"></div>
+              </div>
+              <div class="relics-block"></div>
+            </div>
         </div>
       `;
       ensurePartyGroup().appendChild(card);
@@ -374,17 +375,25 @@
 
       const playerName = card.querySelector<HTMLElement>('.player-name');
       const playerClass = card.querySelector<HTMLElement>('.player-class');
-      const spiritEl = card.querySelector<HTMLElement>('.spirit-total');
+      const spiritFill = card.querySelector<HTMLElement>('.spirit-fill');
       const relicsBlock = card.querySelector<HTMLElement>('.relics-block');
-      if (!playerName || !playerClass || !spiritEl || !relicsBlock) return;
+      if (!spiritFill || !relicsBlock) return;
 
-      playerName.textContent = player.name || t('unknown');
-      playerClass.textContent = player.className || t('unknown');
-      playerClass.style.color = classColor;
-      spiritEl.textContent = formatSpiritTotal(player, displaySpirit, formatNumber);
-      spiritEl.classList.remove('spirit-glow-blue');
+      // keep name/class text in DOM for compatibility, but header is hidden via CSS
+      if (playerName) playerName.textContent = player.name || t('unknown');
+      if (playerClass) {
+        playerClass.textContent = player.className || t('unknown');
+        playerClass.style.color = classColor;
+      }
+
+      // Spirit bar: set fill width based on current / max
+      const current = Number(displaySpirit?.current || 0);
+      const max = Number(displaySpirit?.max || 1) || 1;
+      const pct = Math.max(0, Math.min(100, Math.round((current / max) * 100)));
+      spiritFill.style.width = `${pct}%`;
+      spiritFill.classList.remove('spirit-glow-blue');
       const spiritHighlightClass = getSpiritHighlight(player, displaySpirit);
-      if (spiritHighlightClass) spiritEl.classList.add(spiritHighlightClass);
+      if (spiritHighlightClass) spiritFill.classList.add(spiritHighlightClass);
       const { iconSize, iconGap } = getScaledMetrics(getCardScale());
       const columnCount = Math.max(1, Math.min(getIconsPerRow(), displayIcons.length || 0));
       const rowCount = Math.max(1, Math.ceil((displayIcons.length || 0) / columnCount));

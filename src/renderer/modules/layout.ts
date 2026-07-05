@@ -7,11 +7,11 @@
 
   function getScaledMetrics(cardScale: number): { scale: number; iconSize: number; iconGap: number; horizontalPadding: number; baseMinWidth: number; borderAllowance: number } {
     const scale = Number(cardScale || 1);
-    const iconSize = Math.round(60 * scale);
+    const iconSize = Math.round(40 * scale);
     const iconGap = Math.max(6, Math.round(8 * scale));
-    const horizontalPadding = Math.round(20 * scale);
-    const baseMinWidth = Math.round(180 * scale);
-    const borderAllowance = Math.max(6, Math.round(8 * scale));
+    const horizontalPadding = Math.round(10 * scale);
+    const borderAllowance = Math.max(4, Math.round(6 * scale));
+    const baseMinWidth = horizontalPadding + iconSize + borderAllowance;
     return { scale, iconSize, iconGap, horizontalPadding, baseMinWidth, borderAllowance };
   }
 
