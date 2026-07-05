@@ -136,11 +136,13 @@
     if (isGundeClass(player)) return '';
 
     const currentSpirit = Number(spiritSnapshot?.current || 0);
+    const maxSpirit = Number(spiritSnapshot?.max || getSpiritMaxByBlueStone(player?.stones?.blue));
     const blueStone = Number(player?.stones?.blue || 0);
 
+    if (currentSpirit >= 25) return 'spirit-glow-blue';
+    if (maxSpirit > 0 && currentSpirit >= maxSpirit) return 'spirit-glow-blue';
     if (blueStone >= 1500 && currentSpirit >= 85) return 'spirit-glow-blue';
     if (blueStone >= 450 && blueStone < 2640 && currentSpirit >= 95) return 'spirit-glow-blue';
-    if (blueStone < 450 && currentSpirit >= 100) return 'spirit-glow-blue';
     return '';
   }
 
@@ -335,6 +337,7 @@
           <div class="relics-and-spirit">
             <div class="spirit-bar" aria-hidden="true">
               <div class="spirit-fill"></div>
+              <div class="spirit-text" aria-hidden="true"></div>
             </div>
             <div class="relics-block"></div>
           </div>
@@ -393,8 +396,16 @@
       const pct = Math.max(0, Math.min(100, Math.round((current / max) * 100)));
       spiritFill.style.width = `${pct}%`;
       spiritFill.classList.remove('spirit-glow-blue');
-      const spiritHighlightClass = getSpiritHighlight(player, displaySpirit);
-      if (spiritHighlightClass) spiritFill.classList.add(spiritHighlightClass);
+      const spiritText = cardWrapper.querySelector<HTMLElement>('.spirit-text');
+      if (spiritText) {
+        spiritText.textContent = `${Math.round(current)} / ${Math.round(max)}`;
+        spiritText.classList.remove('spirit-glow-blue');
+        const spiritHighlightClass = getSpiritHighlight(player, displaySpirit);
+        if (spiritHighlightClass) {
+          spiritText.classList.add(spiritHighlightClass);
+          spiritFill.classList.add(spiritHighlightClass);
+        }
+      }
       const { iconSize, iconGap } = getScaledMetrics(getCardScale());
       const columnCount = Math.max(1, Math.min(getIconsPerRow(), displayIcons.length || 0));
       const rowCount = Math.max(1, Math.ceil((displayIcons.length || 0) / columnCount));
@@ -414,6 +425,9 @@
         .sort((a, b) => {
           const roleDiff = getRolePriority(a.player) - getRolePriority(b.player);
           if (roleDiff !== 0) return roleDiff;
+          const nameA = String(a.player.name || '').trim().toLowerCase();
+          const nameB = String(b.player.name || '').trim().toLowerCase();
+          if (nameA !== nameB) return nameA < nameB ? -1 : 1;
           return getPartySlotIndex(a.player, a.index) - getPartySlotIndex(b.player, b.index);
         })
         .map(({ player }) => player);

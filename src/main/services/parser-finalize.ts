@@ -76,6 +76,10 @@ function finalizeState(state: ParserState): FinalizedState {
   const recentSkillsPlayerId = state.recentSkillsPlayerId && visiblePlayerIds.has(state.recentSkillsPlayerId)
     ? state.recentSkillsPlayerId
     : null;
+  const partyPlayerIds = [
+    ...[...state.dungeonPartyIds].filter((playerId) => visiblePlayerIds.has(playerId)),
+    ...[...state.players.keys()].filter((playerId) => visiblePlayerIds.has(playerId) && !state.dungeonPartyIds.has(playerId)),
+  ];
   const recentSkills = (state.recentSkillActivations || [])
     .filter((entry) => visiblePlayerIds.has(entry.playerId || ''))
     .filter((entry) => !recentSkillsPlayerId || entry.playerId === recentSkillsPlayerId)
