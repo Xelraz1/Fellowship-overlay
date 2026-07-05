@@ -166,27 +166,45 @@ button:hover {
   cursor: move;
 }
 
+.player-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
 .player-card {
   min-width: calc(120px * var(--card-scale));
   padding: calc(4px * var(--card-scale));
   box-sizing: border-box;
 }
 
-.player-header {
-  margin-bottom: calc(6px * var(--card-scale));
-  display: none; /* hide name and class text for compact UI */
+.player-name-bubble {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(3px * var(--card-scale)) calc(10px * var(--card-scale));
+  margin-top: calc(-3px * var(--card-scale));
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  z-index: 1;
 }
 
 .player-name {
-  font-size: calc(16px * var(--card-scale));
-  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  transform: translateY(-2px);
+  font-size: calc(14px * var(--card-scale));
+  font-weight: 600;
   line-height: 1.05;
-}
-
-.player-class {
-  margin-top: calc(2px * var(--card-scale));
-  font-size: calc(12px * var(--card-scale));
-  font-weight: 700;
+  text-align: center;
+  color: #f8fafc;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  letter-spacing: 0.01em;
 }
 
 .player-info-row {

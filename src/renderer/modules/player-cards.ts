@@ -324,31 +324,40 @@
     }
 
     function createCard(player: PlayerState): HTMLElement {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'player-card-wrapper';
+
       const card = document.createElement('div');
       card.className = 'panel player-card interactive floating-card';
       card.dataset.playerId = player.id || '';
       card.innerHTML = `
-        <div class="player-header">
-          <div class="player-title-block">
-            <div class="player-name"></div>
-            <div class="player-class"></div>
-          </div>
-        </div>
         <div class="player-info-row">
           <div class="relics-and-spirit">
-              <div class="spirit-bar" aria-hidden="true">
-                <div class="spirit-fill"></div>
-              </div>
-              <div class="relics-block"></div>
+            <div class="spirit-bar" aria-hidden="true">
+              <div class="spirit-fill"></div>
             </div>
+            <div class="relics-block"></div>
+          </div>
         </div>
       `;
-      ensurePartyGroup().appendChild(card);
-      cardMap.set(player.id, card);
-      return card;
+
+      const nameBubble = document.createElement('div');
+      nameBubble.className = 'player-name-bubble';
+      nameBubble.innerHTML = '<div class="player-name"></div>';
+
+      wrapper.appendChild(card);
+      wrapper.appendChild(nameBubble);
+      ensurePartyGroup().appendChild(wrapper);
+      cardMap.set(player.id, wrapper);
+      return wrapper;
     }
 
-    function updateCard(card: HTMLElement, player: PlayerState): void {
+    function updateCard(cardWrapper: HTMLElement, player: PlayerState): void {
+      const card = cardWrapper.querySelector<HTMLElement>('.player-card');
+      const playerName = cardWrapper.querySelector<HTMLElement>('.player-name');
+      const spiritFill = cardWrapper.querySelector<HTMLElement>('.spirit-fill');
+      const relicsBlock = cardWrapper.querySelector<HTMLElement>('.relics-block');
+      if (!card || !spiritFill || !relicsBlock) return;
       const history = Array.isArray(player.spiritHistory) ? player.spiritHistory : [];
       const last = player.spirit || history[history.length - 1] || null;
       const classColor = player.classColor || '#6b7280';
@@ -373,17 +382,9 @@
       if (!relicsInserted) displayIcons.push(...relicIcons);
       applyCardLayout(card, getCardScale(), displayIcons.length, getIconsPerRow());
 
-      const playerName = card.querySelector<HTMLElement>('.player-name');
-      const playerClass = card.querySelector<HTMLElement>('.player-class');
-      const spiritFill = card.querySelector<HTMLElement>('.spirit-fill');
-      const relicsBlock = card.querySelector<HTMLElement>('.relics-block');
-      if (!spiritFill || !relicsBlock) return;
-
-      // keep name/class text in DOM for compatibility, but header is hidden via CSS
-      if (playerName) playerName.textContent = player.name || t('unknown');
-      if (playerClass) {
-        playerClass.textContent = player.className || t('unknown');
-        playerClass.style.color = classColor;
+      if (playerName) {
+        playerName.textContent = player.name || t('unknown');
+        playerName.style.color = classColor;
       }
 
       // Spirit bar: set fill width based on current / max
