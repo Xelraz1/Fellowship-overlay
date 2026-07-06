@@ -52,12 +52,13 @@ The overlay can work in two modes:
 
 ## Controls
 
+- **F7** — Open settings
 - **F8** — Toggle overlay lock state
   - When the overlay is **locked**, it passes all clicks through to the game
   - When the overlay is **unlocked**, it does **not** pass clicks through
 - **F9** — Select log file
 - **F10** — Shor or hide overlay
-- **F7** — Open settings
+
 ## Tray
 
 The application also runs in the **system tray**.
