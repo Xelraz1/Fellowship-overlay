@@ -57,7 +57,7 @@ The overlay can work in two modes:
   - When the overlay is **unlocked**, it does **not** pass clicks through
 - **F9** — Select log file
 - **F10** — Shor or hide overlay
-- **F11** — Open settings
+- **F7** — Open settings
 ## Tray
 
 The application also runs in the **system tray**.
